@@ -12,13 +12,16 @@ import org.springframework.stereotype.Component;
 public class GeneralInterceptorAspect {
 
     // poing cut is the ezpression language
-//    @Pointcut("execution(* com.learn.mybatis.controller.*.*(..))")
+    // this point cut is for the method level execution
+    // this is telling that return type to any and number of paramaeter is also the any number
+    @Pointcut("execution(* com.learn.mybatis.controller.*.*(..))")
+    // this is the point cut for method within the package
 //    @Pointcut("within(com.learn.mybatis.mapper.*)")
     // only executed for StudentMapper class
 //        @Pointcut("this(com.learn.mybatis.mapper.StudentMapper)")
 
     // point cut for the annotation
-@Pointcut("@annotation(com.learn.mybatis.annotation.CustomAnnotation)")
+//@Pointcut("@annotation(com.learn.mybatis.annotation.CustomAnnotation)")
 
     public void loggingPointCut(){
 
@@ -58,7 +61,7 @@ public class GeneralInterceptorAspect {
 
             }
 
-            return Object;
+            return o;
     }
 
 }
