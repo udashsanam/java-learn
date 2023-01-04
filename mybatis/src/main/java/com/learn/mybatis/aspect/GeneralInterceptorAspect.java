@@ -1,7 +1,9 @@
 package com.learn.mybatis.aspect;
 
 import com.learn.mybatis.entity.CourseEntity;
+import com.learn.mybatis.entity.TeacherEntity;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +11,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class GeneralInterceptorAspect {
 
-    @Pointcut("execution(* com.learn.mybatis.controller.*.*(..))")
+    // poing cut is the ezpression language
+//    @Pointcut("execution(* com.learn.mybatis.controller.*.*(..))")
+//    @Pointcut("within(com.learn.mybatis.mapper.*)")
+    // only executed for StudentMapper class
+//        @Pointcut("this(com.learn.mybatis.mapper.StudentMapper)")
+
+    // point cut for the annotation
+@Pointcut("@annotation(com.learn.mybatis.annotation.CustomAnnotation)")
+
     public void loggingPointCut(){
 
     }
@@ -33,6 +43,22 @@ public class GeneralInterceptorAspect {
     @AfterThrowing(value = "execution(* com.learn.mybatis.controller.*.*(..))", throwing = "exception")
     public void afterReturing(JoinPoint joinPoint, Exception exception){
         System.out.println("after throwing  invoked :: " + exception);
+    }
+
+        @Around("loggingPointCut()")
+    public Object aroudAspect(ProceedingJoinPoint joinPoint) throws Throwable{
+        System.out.println("Before method invoked:: "+ joinPoint.getSignature());
+         System.out.println("after method invoked::" + joinPoint.getSignature());
+         // getting object k
+         Object o = joinPoint.proceed();
+
+            if(o  instanceof CourseEntity){
+                System.out.println("After method invoke ");
+            } else  if(o instanceof TeacherEntity){
+
+            }
+
+            return Object;
     }
 
 }
