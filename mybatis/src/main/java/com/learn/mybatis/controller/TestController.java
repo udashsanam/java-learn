@@ -159,21 +159,28 @@ public class TestController {
     }
 
     @GetMapping("/findAllCourseOfStudent")
-    public StudentCoursePojo getAllCourseOfStudent(@RequestParam("studentId") int studentId){
+    public StudentCoursePojo getAllCourseOfStudent(@RequestParam("studentId") int studentId) throws Exception {
 
 //       List<StudentCoursePojo> studentCoursePojo = studentMapper.findAllCourseOfStudent(studentId);
       StudentCoursePojo studentCoursePojo = studentMapper.findAllCourseByStudentId(studentId);
+        throw  new Exception("hello");
 
 //        return studentCoursePojo;
-        return studentCoursePojo;
+//        return studentCoursePojo;
     }
 
     @GetMapping("/findAllTeacherAndStudentByCourseId")
-    public Object findAllStudentAndCourseByCourseId(@RequestParam("courseId") int courseId, @RequestParam("courseId2") int courseId2){
+    public Object findAllStudentAndCourseByCourseId(@RequestParam("courseId") int courseId, @RequestParam("courseId2") int courseId2) throws Exception {
 
 //        List<Object> o = studentMapper.findAllStudentAndCourseByCourseId(courseId);
         StudentTeacherPojo studentTeacherPojo = studentMapper.findAllStudentAndCourseByCourseId(courseId, courseId2);
         return studentMapper.findAllStudentAndCourseByCourseId(courseId,courseId2);
+    }
+
+    @GetMapping("/throwingCourse")
+    public Object findAllStudentAndCourseByCourseId()  {
+
+        return new CourseEntity( "hello", "hsdl");
     }
 
 
