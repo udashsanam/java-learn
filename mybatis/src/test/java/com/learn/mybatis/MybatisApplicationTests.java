@@ -1,10 +1,10 @@
-package com.learn.aspectorientedprogram;
+package com.learn.mybatis;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AspectOrientedProgramApplicationTests {
+class MybatisApplicationTests {
 
 	@Test
 	void contextLoads() {
