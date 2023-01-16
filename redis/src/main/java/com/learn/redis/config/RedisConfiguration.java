@@ -1,5 +1,6 @@
 package com.learn.redis.config;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -10,16 +11,20 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.expression.spel.ast.OpGE;
 
 @Configuration
+@EnableCaching
+
 public class RedisConfiguration {
 
     // default jedis connection
     @Bean
     JedisConnectionFactory jedisConnectionFactory(){
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName("localhost");
+        redisStandaloneConfiguration.setHostName("127.0.0.1");
         redisStandaloneConfiguration.setPort(6379);
-        JedisConnectionFactory connectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration);
-        return connectionFactory;
+        //redisStandaloneConfiguration.setPassword("password");
+
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration);
+        return  jedisConnectionFactory;
     }
 
     @Bean
@@ -28,11 +33,10 @@ public class RedisConfiguration {
         redisTemplate.setConnectionFactory(jedisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
+        redisTemplate.setHashKeySerializer(new JdkSerializationRedisSerializer());
         redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.afterPropertiesSet();
-
         return redisTemplate;
     }
 
