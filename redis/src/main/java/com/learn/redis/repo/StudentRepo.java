@@ -6,4 +6,12 @@ import org.springframework.stereotype.Repository;
 
 public interface StudentRepo {
     Object save(Student student);
+
+    Object findAll();
+
+    Object findById(String studentId);
+
+    Object update(Student student);
+
+    Object deleteById(String studentId);
 }
