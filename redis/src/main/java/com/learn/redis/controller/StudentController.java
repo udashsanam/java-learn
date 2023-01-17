@@ -34,7 +34,7 @@ public class StudentController {
         return ResponseEntity.ok(studentRepo.findAll());
     }
 
-    @GetMapping()
+    @GetMapping("/findById")
     public ResponseEntity<?> getById(@RequestParam("studentId") String studentId){
         return ResponseEntity.ok(studentRepo.findById(studentId));
     }
