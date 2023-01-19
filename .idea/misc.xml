@@ -5,6 +5,7 @@
       <list>
         <option value="$PROJECT_DIR$/mybatis/pom.xml" />
         <option value="$PROJECT_DIR$/redis/pom.xml" />
+        <option value="$PROJECT_DIR$/messaging-rabbitmq/pom.xml" />
       </list>
     </option>
   </component>
