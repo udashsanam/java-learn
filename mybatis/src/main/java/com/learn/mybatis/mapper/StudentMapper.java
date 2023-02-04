@@ -19,6 +19,6 @@ public interface StudentMapper {
 
     StudentCoursePojo findAllCourseByStudentId(@Param("studentId") int studentId);
 
-    StudentTeacaherPojo findAllStudentAndCourseByCourseId(@Param("courseId") int courseId, @Param("courseId2") int courseId2);
+    StudentTeacherPojo findAllStudentAndCourseByCourseId(@Param("courseId") int courseId, @Param("courseId2") int courseId2);
 
 }
