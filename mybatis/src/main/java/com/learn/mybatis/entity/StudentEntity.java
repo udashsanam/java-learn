@@ -7,7 +7,6 @@ import lombok.*;
 
 @Entity
 @Table(name = "student")
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentEntity extends BaseEntity{
