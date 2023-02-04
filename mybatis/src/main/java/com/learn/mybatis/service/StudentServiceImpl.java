@@ -130,5 +130,11 @@ public class StudentServiceImpl implements StudentService{
         StudentEntity studentEntity = studentMapper.findById(id);
         return studentEntity;
     }
+
+    @Override
+    public String saveStudent(StudentEntity studentEntity){
+        studentMapper.insertStudent(studentEntity.getName(), studentEntity.getRollNo(), studentEntity.getAddress());
+        return "Successfully saved";
+    }
 }
 

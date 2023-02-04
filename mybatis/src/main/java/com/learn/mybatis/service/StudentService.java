@@ -8,4 +8,6 @@ public interface StudentService {
     String saveAllTeacher();
 
     StudentEntity findStudentById(Long id);
+
+    String saveStudent(StudentEntity studentEntity);
 }

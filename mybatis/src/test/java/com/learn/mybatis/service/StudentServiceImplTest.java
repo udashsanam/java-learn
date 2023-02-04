@@ -30,6 +30,10 @@ class StudentServiceImplTest {
 
     private StudentMapper studentMapper = Mockito.mock(StudentMapper.class);
 
+    @Captor
+    private ArgumentCaptor<StudentEntity> studentEntityArgumentCaptor;
+
+
 
     @Test@DisplayName("Testing the student course save ")
     void saveAllStudentTest () {
@@ -120,5 +124,63 @@ class StudentServiceImplTest {
         Mockito.when(studentMapper.findById(1l)).thenReturn(studentEntity);
 
         assertEquals(studentEntity,studentService.findStudentById(1l));
+    }
+
+    @Test
+    @DisplayName("Testing whether the student save service works or not")
+    void saveStudentTest() {
+        StudentServiceImpl studentService = new StudentServiceImpl(studentRepository, courseRepository,courseStudentRepository, teacherRepository, teacherCourseRepository, studentMapper);
+        StudentEntity studentEntity = new StudentEntity();
+        studentEntity.setId(1l);
+        studentEntity.setRollNo(1);
+        studentEntity.setName("sanam");
+        studentEntity.setAddress("address");
+
+        // mockin the method which do return nothing but takes the input
+        Mockito.doAnswer((param) -> {
+            System.out.println("Student roll no  = " + param.getArgument(1));
+            assertTrue("sanam".equals(param.getArgument(0)));
+            return null;
+        }).when(studentMapper).insertStudent(Mockito.anyString(), Mockito.anyInt(), Mockito.anyString());
+
+        assertEquals("Successfully saved", studentService.saveStudent(studentEntity));
+    }
+
+    @Test
+    void savingStudentValidationTest() {
+        StudentServiceImpl studentService = new StudentServiceImpl(studentRepository, courseRepository,courseStudentRepository, teacherRepository, teacherCourseRepository, studentMapper);
+        StudentEntity studentEntity = new StudentEntity();
+        studentEntity.setId(1l);
+        studentEntity.setRollNo(1);
+        studentEntity.setName("sanam");
+        studentEntity.setAddress("address");
+
+        // mockin the method which do return nothing but takes the input
+        Mockito.doAnswer((param) -> {
+            System.out.println("Student roll no  = " + param.getArgument(1));
+            System.out.println("Student nam " + param.getArgument(2));
+            assertTrue("sanam".equals(param.getArgument(0)));
+            return null;
+        }).when(studentMapper).insertStudent(Mockito.anyString(), Mockito.anyInt(), Mockito.anyString());
+
+        assertEquals("Successfully saved", studentService.saveStudent(studentEntity));
+//        studentService.saveStudent(studentEntity);
+
+        // getting the  value afte invoking the method
+//        Mockito.verify(studentService, Mockito.times(1)).saveStudent(studentEntityArgumentCaptor.capture());
+//        assertEquals("sanam", studentEntityArgumentCaptor.getValue().getName());
+
+        // initializing the argument capture inside method
+        ArgumentCaptor<String> addressArgumentCapture = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<Integer> intArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
+
+        Mockito.verify(studentMapper, Mockito.times(1)).insertStudent(stringArgumentCaptor.capture(),intArgumentCaptor.capture(),addressArgumentCapture.capture());
+
+        assertEquals("sanam", stringArgumentCaptor.getValue());
+        assertEquals(1, intArgumentCaptor.getValue());
+        assertEquals("address", addressArgumentCapture.getValue());
+
+
     }
 }

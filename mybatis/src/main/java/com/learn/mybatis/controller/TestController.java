@@ -70,8 +70,7 @@ public class TestController {
 
     @PostMapping("/saveStudent")
     public String saveStudent(@RequestBody StudentEntity  studentEntity){
-        studentMapper.insertStudent(studentEntity.getName(), studentEntity.getRollNo(), studentEntity.getAddress());
-        return "Successfully  install";
+       return studentService.saveStudent(studentEntity);
     }
 
     @GetMapping("/findAllCourseOfStudent")
