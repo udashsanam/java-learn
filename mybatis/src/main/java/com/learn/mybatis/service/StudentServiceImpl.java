@@ -1,11 +1,8 @@
 package com.learn.mybatis.service;
 
-import com.learn.mybatis.entity.CourseEntity;
-import com.learn.mybatis.entity.CourseStudentEntity;
-import com.learn.mybatis.entity.StudentEntity;
-import com.learn.mybatis.repository.CourseRepository;
-import com.learn.mybatis.repository.CourseStudentRepository;
-import com.learn.mybatis.repository.StudentRepository;
+import com.learn.mybatis.entity.*;
+import com.learn.mybatis.mapper.StudentMapper;
+import com.learn.mybatis.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +19,12 @@ public class StudentServiceImpl implements StudentService{
     private final CourseRepository courseRepository;
 
     private final CourseStudentRepository courseStudentRepository;
+
+    private final TeacherRepository teacherRepository;
+
+    private final TeacherCourseRepository teacherCourseRepository;
+
+    private final StudentMapper studentMapper;
 
     @Override
     public String saveAllStudent() {
@@ -80,5 +83,52 @@ public class StudentServiceImpl implements StudentService{
     }
 
 
+    @Override
+    public String saveAllTeacher() {
+        saveTeachers();
+        saveTeacherCourse();
+        return "Successful";
     }
+
+    private void saveTeachers(){
+        for (int i = 0; i < 10; i++) {
+            TeacherEntity teacherEntity = new TeacherEntity();
+            teacherEntity.setAddress("teacher address " + i);
+            teacherEntity.setName("teacher name " + i);
+            try {
+                teacherRepository.save(teacherEntity);
+            } catch (Exception ex){
+                System.out.println("saving teacher");
+            }
+        }
+    }
+
+    private void saveTeacherCourse(){
+        List<TeacherEntity> teacherEntities = teacherRepository.findAll();
+        List<CourseEntity> courseEntityList = courseRepository.findAll();
+        for (TeacherEntity teacherEntity :
+                teacherEntities) {
+            for (int i = 0; i < teacherEntities.size(); i++) {
+                for (int j = 0; j < i; j++) {
+                    TeacherCourseEntity courseEntity = new TeacherCourseEntity();
+                    courseEntity.setTeacherEntity(teacherEntity);
+                    courseEntity.setCourseEntity(courseEntityList.get(j));
+
+                    try{
+                        teacherCourseRepository.save(courseEntity);
+
+                    } catch (Exception ex){
+                        System.out.println("Error saving the teacher course");
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public StudentEntity findStudentById(Long id){
+        StudentEntity studentEntity = studentMapper.findById(id);
+        return studentEntity;
+    }
+}
 
