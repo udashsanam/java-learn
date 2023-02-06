@@ -3,16 +3,17 @@ package com.learn.mybatis.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "student")
+@AllArgsConstructor
+@NoArgsConstructor
 public class StudentEntity extends BaseEntity{
 
     private String name;
 
-    private int rollNo;
+    private Integer rollNo;
 
     private String address;
 
