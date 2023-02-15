@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/redis/pom.xml" />
         <option value="$PROJECT_DIR$/messaging-rabbitmq/pom.xml" />
         <option value="$PROJECT_DIR$/web-rtc/pom.xml" />
+        <option value="$PROJECT_DIR$/multi-language/pom.xml" />
       </list>
     </option>
   </component>
