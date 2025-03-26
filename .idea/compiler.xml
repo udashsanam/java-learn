@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="corejava" />
         <module name="multi-language" />
         <module name="web-rtc" />
         <module name="messaging-rabbitmq" />
