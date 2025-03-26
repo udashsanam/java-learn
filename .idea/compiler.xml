@@ -15,12 +15,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="messaging-rabbitmq" target="17" />
-      <module name="multi-language" target="1.8" />
-      <module name="mybatis" target="17" />
-      <module name="redis" target="17" />
       <module name="spring-reddit-clone" target="1.8" />
-      <module name="web-rtc" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
