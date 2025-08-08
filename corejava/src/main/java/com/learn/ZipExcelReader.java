@@ -10,10 +10,11 @@ import java.util.zip.ZipInputStream;
 public class ZipExcelReader {
 
     public static void main(String[] args) throws IOException {
-        String zipFilePath = "/Users/sanamudash/Downloads/test.zip";
+        String zipFilePath = "/Users/sanamudash/Downloads/StudentImportFormatV2 (2).zip";
 
         try (FileInputStream fis = new FileInputStream(zipFilePath);
-             ZipInputStream zis = new ZipInputStream(fis)) {
+             ZipInputStream zis = new ZipInputStream(fis)
+             ) {
 
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
@@ -53,7 +54,13 @@ public class ZipExcelReader {
             case STRING -> cell.getStringCellValue();
             case NUMERIC -> String.valueOf(cell.getNumericCellValue());
             case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
-            case FORMULA -> cell.getCellFormula();
+            case FORMULA -> {
+                FormulaEvaluator evaluator = cell.getSheet()
+                        .getWorkbook()
+                        .getCreationHelper()
+                        .createFormulaEvaluator();
+                yield evaluator.evaluate(cell).formatAsString();
+            }
             case BLANK -> "";
             default -> "UNKNOWN";
         };
