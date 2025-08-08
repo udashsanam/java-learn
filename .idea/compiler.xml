@@ -11,16 +11,22 @@
         <module name="multi-language" />
         <module name="web-rtc" />
         <module name="messaging-rabbitmq" />
-        <module name="redis" />
         <module name="mybatis" />
+        <module name="batch" />
+        <module name="redis" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="batch.main" target="21" />
+      <module name="batch.test" target="21" />
       <module name="spring-reddit-clone" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="batch" options="-parameters" />
+      <module name="batch.main" options="-parameters" />
+      <module name="batch.test" options="-parameters" />
       <module name="messaging-rabbitmq" options="-parameters" />
       <module name="multi-language" options="-parameters" />
       <module name="mybatis" options="-parameters" />
