@@ -10,7 +10,7 @@ import java.util.zip.ZipInputStream;
 public class ZipExcelReader {
 
     public static void main(String[] args) throws IOException {
-        String zipFilePath = "/Users/sanamudash/Downloads/StudentImportFormatV2 (2).zip";
+        String zipFilePath = "/Users/sanamudash/Downloads/StudentImportFormatV2 (.zip";
 
         try (FileInputStream fis = new FileInputStream(zipFilePath);
              ZipInputStream zis = new ZipInputStream(fis)
@@ -35,7 +35,9 @@ public class ZipExcelReader {
                             System.out.println("  Sheet: " + sheet.getSheetName());
 
                             for (Row row : sheet) {
+                                int x =row.getRowNum();
                                 for (Cell cell : row) {
+//                                    if(x == 0) continue;
                                     System.out.print(getCellValue(cell) + "\t");
                                 }
                                 System.out.println();
@@ -55,11 +57,16 @@ public class ZipExcelReader {
             case NUMERIC -> String.valueOf(cell.getNumericCellValue());
             case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
             case FORMULA -> {
-                FormulaEvaluator evaluator = cell.getSheet()
-                        .getWorkbook()
-                        .getCreationHelper()
-                        .createFormulaEvaluator();
-                yield evaluator.evaluate(cell).formatAsString();
+                try {
+                    FormulaEvaluator evaluator = cell.getSheet()
+                            .getWorkbook()
+                            .getCreationHelper()
+                            .createFormulaEvaluator();
+                    evaluator.setIgnoreMissingWorkbooks(true);
+                    yield evaluator.evaluate(cell).formatAsString();
+                } catch (Exception e) {
+                    yield cell.getCellFormula(); // Return formula text if evaluation fails
+                }
             }
             case BLANK -> "";
             default -> "UNKNOWN";
